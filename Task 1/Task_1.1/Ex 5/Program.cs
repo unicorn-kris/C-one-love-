@@ -18,11 +18,24 @@ namespace Ex_5
                     sum += j;
                 j += 3;
             }
-            while (k < 1000) {
+            while (k < 1000)
+            {
                 sum += k;
                 k += 5;
             }
-            Console.WriteLine(sum);
+            Console.WriteLine($"Cycle result {sum}");
+            sum = 0;
+            int a0 = 3;
+            int b0 = 5;
+            int aN = (1000 / 3) * 3;
+            int a = 1000 / 3;
+            int bN = (1000 / 5) * 5 - 5;
+            int b = 1000 / 5 - 1;
+            int c0 = 15;
+            int cN = (1000 / 15) * 15;
+            int c = 1000 / 15;
+            int result = ((a0 + aN) / 2) * a + ((b0 + bN) / 2) * b - (c0 + cN) * (c/2);
+            Console.WriteLine($"Formula (arithmetical progression) result {result}");
         }
     }
 }

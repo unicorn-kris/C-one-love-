@@ -19,7 +19,7 @@ namespace Ex_9
             int sum = 0;
             foreach (int num in mas)
             {
-                if (num % 2 == 0)
+                if (num >= 0)
                     sum += num;
             }
             Console.WriteLine($"Non-negative sum: {sum}");

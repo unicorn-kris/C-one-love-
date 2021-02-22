@@ -23,7 +23,7 @@ namespace Ex_1
                 if (a > 0 && b > 0)
                 {
                     int resultS = a * b;
-                    Console.WriteLine("S = " + resultS);
+                    Console.WriteLine($"S =  {resultS}");
                 }
             }
         }
