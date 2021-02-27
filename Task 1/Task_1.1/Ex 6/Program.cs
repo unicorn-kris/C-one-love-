@@ -40,7 +40,7 @@ namespace Ex_6
                 Console.WriteLine();
             }
             if (!flagChange)
-                Console.WriteLine("Введите");
+                Console.WriteLine("Введите: \n 1: bold \n 2: italic \n 3: underline");
         }
         static void Main(string[] args)
         {
