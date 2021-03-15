@@ -38,9 +38,10 @@ namespace Task_2_1_2
         }
         public override void Output()
         {
+            Console.WriteLine("Rectangle");
             Console.WriteLine($"Left side = {_side_a}; Coordinates: ({_x}, {_y_left_lower}) - ({_x}, {_y_left_upper})");
             Console.WriteLine($"Lower side = {_side_b}; Coordinates: ({_x}, {_y_left_lower}) - ({_x2}, {_y_left_lower})");
-            Console.WriteLine($"Perimeter = {Perimeter()}; Area = {Area()}");
+            Console.WriteLine($"Perimeter = {Perimeter():f2}; Area = {Area():f2}");
         }
     }
 }

@@ -7,6 +7,7 @@ namespace Task_2_1_2
         protected double _x0;
         protected double _y0;
         protected double _radius;
+        
         public Circle(double r)
         {
             _x0 = _y0 = 0;
@@ -35,8 +36,9 @@ namespace Task_2_1_2
         }
         public virtual void Output()
         {
+            Console.WriteLine("Circle");
             Console.WriteLine($"Center coordinates: ({_x0}, {_y0}); Radius = {_radius}");
-            Console.WriteLine($"Perimeter = {Perimeter()}; Area = {Area()}");
+            Console.WriteLine($"Perimeter = {Perimeter():f2}; Area = {Area():f2}");
         }
     }
 }

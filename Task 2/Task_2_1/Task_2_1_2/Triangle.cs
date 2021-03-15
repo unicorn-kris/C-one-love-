@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task_2_1_2
 {
@@ -23,12 +19,12 @@ namespace Task_2_1_2
             _side_b = b;
             _side_c = c;
         }
-        public Triangle(double x1, double y1, double x2, double y2, double x3, double y3)
-        {
-            _side_a = Math.Sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
-            _side_b = Math.Sqrt((x2 - x3) * (x2 - x3) + (y2 - y3) * (y2 - y3));
-            _side_c = Math.Sqrt((x1 - x3) * (x1 - x3) + (y1 - y3) * (y1 - y3));
-        }
+        //public Triangle(double x1, double y1, double x2, double y2, double x3, double y3)
+        //{
+        //    _side_a = Math.Sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
+        //    _side_b = Math.Sqrt((x2 - x3) * (x2 - x3) + (y2 - y3) * (y2 - y3));
+        //    _side_c = Math.Sqrt((x1 - x3) * (x1 - x3) + (y1 - y3) * (y1 - y3));
+        //}
         public virtual double Perimeter()
         {
             return _side_a + _side_b + _side_c;
@@ -40,8 +36,9 @@ namespace Task_2_1_2
         }
         public virtual void Output()
         {
+            Console.WriteLine("Triangle");
             Console.WriteLine($"Side 1 = {_side_a}; Side 2 = {_side_b}; Side 3 = {_side_c};");
-            Console.WriteLine($"Perimeter = {Perimeter()}; Area = {Area()}");
+            Console.WriteLine($"Perimeter = {Perimeter():f2}; Area = {Area():f2}");
         }
     }
 }

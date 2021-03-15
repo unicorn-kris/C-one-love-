@@ -48,8 +48,9 @@ namespace Task_2_1_2
         }
         public virtual void Output()
         {
+            Console.WriteLine("Square");
             Console.WriteLine($"Left side = {_side_a}; Coordinates: ({_x}, {_y_left_lower}) - ({_x}, {_y_left_upper})");
-            Console.WriteLine($"Perimeter = {Perimeter()}; Area = {Area()}");
+            Console.WriteLine($"Perimeter = {Perimeter():f2}; Area = {Area():f2}");
         }
     }
 }
