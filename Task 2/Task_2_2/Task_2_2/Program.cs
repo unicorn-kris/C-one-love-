@@ -21,7 +21,13 @@ namespace Task_2_2
             Console.ReadLine();
             Game c = new Game();
             c.Out();
-            char forGame = char.Parse(Console.ReadLine());
+            char forGame = '\0';
+            string input = Console.ReadLine();
+            while (input.Length != 1)
+            {
+                input = Console.ReadLine();
+            }
+            forGame = char.Parse(input);
             while (forGame != '\n' && !c.End)
             {
                 c.GoGamer(forGame);
@@ -30,9 +36,15 @@ namespace Task_2_2
 
                 if (!c.End)
                 {
-                    forGame = char.Parse(Console.ReadLine());
+                    input = Console.ReadLine();
+                    while (input.Length != 1)
+                    {
+                        input = Console.ReadLine();
+                    }
+                    forGame = char.Parse(input);
                 }
             }
+            Console.ReadLine();
         }
     }
 }
