@@ -26,9 +26,10 @@ namespace Task_2_2
             {
                 c.GoGamer(forGame);
                 c.GoMonster();
+                    c.Out();
+
                 if (!c.End)
                 {
-                    c.Out();
                     forGame = char.Parse(Console.ReadLine());
                 }
             }
