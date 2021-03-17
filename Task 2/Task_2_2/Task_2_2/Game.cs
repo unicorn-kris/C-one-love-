@@ -62,13 +62,8 @@ namespace Task_2_2
             }
 
         }
-        public void GoGame(char Way)
+        public void GoGamer(char Way)
         {
-            for (int i = 0; i < _monsters.Count; ++i)
-            {
-                _monsters[i].Run();
-            }
-
             _gamer.Go(Way);
             if (_gamer.X > Width - 2)
             {
@@ -96,14 +91,7 @@ namespace Task_2_2
                     _bonuses[i].NewPlace();
                 }
             }
-            for (int i = 0; i < _monsters.Count; ++i) //если монстр напал, сбросить игру
-            {
-                if (_monsters[i].Y == _gamer.X && _monsters[i].X == _gamer.Y)
-                {
-                    Console.WriteLine("Напал монстр! Вы проиграли!");
-                    EndGame = true;
-                }
-            }
+            
             for (int i = 0; i < _barriers.Count; ++i) //если наткнулся на препятствие - сбросить геймера в начало
             {
                 if (_barriers[i].Y == _gamer.X && _barriers[i].X == _gamer.Y)
@@ -120,7 +108,22 @@ namespace Task_2_2
             }
            
         }
+        public void GoMonster()
+        {
+            for (int i = 0; i < _monsters.Count; ++i)
+            {
+                _monsters[i].Run();
+            }
+            for (int i = 0; i < _monsters.Count; ++i) //если монстр напал, сбросить игру
+            {
+                if (_monsters[i].Y == _gamer.X && _monsters[i].X == _gamer.Y)
+                {
+                    Console.WriteLine("Напал монстр! Вы проиграли!");
+                    EndGame = true;
+                }
+            }
 
+        }
         public bool End
         {
             get

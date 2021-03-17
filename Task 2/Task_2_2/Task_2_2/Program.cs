@@ -24,13 +24,14 @@ namespace Task_2_2
             char forGame = char.Parse(Console.ReadLine());
             while (forGame != '\n' && !c.End)
             {
-                c.GoGame(forGame);
+                c.GoGamer(forGame);
+                c.GoMonster();
                 if (!c.End)
                 {
                     c.Out();
                     forGame = char.Parse(Console.ReadLine());
                 }
-                }
+            }
         }
     }
 }
