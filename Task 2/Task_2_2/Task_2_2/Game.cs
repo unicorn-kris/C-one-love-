@@ -24,7 +24,7 @@ namespace Task_2_2
             Random rnd = new Random();
             int xGame = 0;
             int yGame = 0;
-            int count = rnd.Next(0, Width); //число игровых элементов - барьеров
+            int count = rnd.Next(1, Width); //число игровых элементов - барьеров
             for (int i = 0; i < count; ++i)
             {
                 xGame = rnd.Next(1, Height - 2);
@@ -43,7 +43,7 @@ namespace Task_2_2
                 _barriers.Add(new Barrier(Height-1, i));
             }
 
-            count = rnd.Next(0, Width); //число игровых элементов - бонусов
+            count = rnd.Next(1, Width); //число игровых элементов - бонусов
             for (int i = 0; i < count; ++i)
             {
                 xGame = rnd.Next(1, Height - 2);
@@ -52,7 +52,7 @@ namespace Task_2_2
                 _bonuses.Add(newB);
             }
 
-            count = rnd.Next(0, Width); //число игровых элементов - монстров
+            count = rnd.Next(1, Width); //число игровых элементов - монстров
             for (int i = 0; i < count; ++i)
             {
                 xGame = rnd.Next(2, Height - 2);
