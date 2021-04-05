@@ -12,7 +12,7 @@ namespace Task_3_1_1
         {
             int N;
             bool input = int.TryParse(Console.ReadLine(), out N);
-            while (!input)
+            while (!input && N < 0)
             {
                 Console.WriteLine("Введите корректное значение");
                 input = int.TryParse(Console.ReadLine(), out N);
