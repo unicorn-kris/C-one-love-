@@ -10,7 +10,13 @@ namespace Task_3_2
     {
         static void Main(string[] args)
         {
-
+           
+            int[] arr = { 1, 2, 3 };
+            CycledDynamicArray<int> array = new CycledDynamicArray<int>( arr );
+            foreach(int a in array)
+            {
+                Console.WriteLine($" {a}");
+            }
         }
     }
 }

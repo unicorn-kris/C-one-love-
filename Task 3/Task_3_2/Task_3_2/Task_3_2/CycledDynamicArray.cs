@@ -5,9 +5,55 @@ using System.Linq;
 
 namespace Task_3_2
 {
-    class CycledDynamicArray<T>:  IEnumerable, IEnumerable<T>, ICloneable
+    class MyEnumerator<T> : IEnumerator<T>
     {
-{
+        // поля
+        protected int Length = 0;
+        protected int Index = -1;
+        protected T[] Values = null;
+
+        public MyEnumerator(T[] values)
+        {
+            // allocate memory
+            Length = values.Length;
+            Values = new T[Length];
+
+            // add values
+            for (int i = 0; i < values.Length; i++)
+                Values[i] = values[i];
+        }
+
+         object IEnumerator.Current => Current;
+
+         public T Current
+        {
+            get { return Values[Index]; }
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool MoveNext()
+        {
+            Index++;
+            if (Index == Length)
+                Index = 0;
+            return Index < Length;
+        }
+
+        public void Reset()
+        {
+            Index = 0;
+        }
+    }
+
+    // MyEnumerable
+   
+    class CycledDynamicArray<T>: IEnumerable<T>, ICloneable
+    {
+
         private T[] _array;
 
         public CycledDynamicArray()
@@ -173,15 +219,20 @@ namespace Task_3_2
             }
             return insert;
         }
+
+
+        //IEnumerable
         public IEnumerator GetEnumerator()
         {
-            return _array.GetEnumerator();
+            MyEnumerator<T> myEnumerator = new MyEnumerator<T>(_array);
+            return myEnumerator;
         }
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
+
             return ((IEnumerable<T>)_array).GetEnumerator();
         }
-       
+
         public T this[int index]
         {
             get
