@@ -88,6 +88,7 @@ namespace Task_4
             if (mode == (int)Decide.Watch)
             {
                 MonitorDirectory(pathMain);
+
             }
             else if (mode == (int)Decide.Back && Directory.Exists(pathMain) && Directory.Exists(pathCopy))
             {
@@ -151,7 +152,7 @@ namespace Task_4
                     }
                 }
             }
-
+            
         }
         private static void OnCreated(object sender, FileSystemEventArgs e)
         {
@@ -189,8 +190,11 @@ namespace Task_4
         static string pathLogCopy = Path.Combine(Directory.GetCurrentDirectory(), "LOG_Copy.txt");
         static void BackDirectory()
         {
+            
             Console.WriteLine("Enter date for backup");
             DateTime dateBackUp = InputDate();
+
+            bool changes = false;
 
             foreach (string folder in Directory.GetFiles("C:/Monitoring"))
             {
@@ -202,46 +206,64 @@ namespace Task_4
                 using (StreamWriter log_copy = new StreamWriter(pathLogCopy, false))
                 {
 
-
+                    
                     string read = log.ReadLine();
-                    string[] data = read.Split(new[] { ' ', ':', '.' }, StringSplitOptions.RemoveEmptyEntries);
-                    DateTime newDateTime = new DateTime(int.Parse(data[2]), int.Parse(data[1]), int.Parse(data[0]), int.Parse(data[3]), int.Parse(data[4]), int.Parse(data[5]));
-                    string action = "";
-                    while (newDateTime <= dateBackUp && read != null)
+                    if (read != null)
                     {
-                       
-
-                        action = data[6];
-                        if (action == "Created")
-                            Created(data);
-                        else if (action == "Deleted")
-                            Deleted(data);
-                        else if (action == "Renamed")
-                            Renamed(read);
-                        else if (action == "Changed")
-                            Changed(read);
-                        read = read.Remove(0, 19);
-                        log_copy.WriteLine($"{DateTime.Now}{read}");
-                        read = log.ReadLine();
-                        if (read != null)
+                        string[] data = read.Split(new[] { ' ', ':', '.' }, StringSplitOptions.RemoveEmptyEntries);
+                        DateTime newDateTime = new DateTime(int.Parse(data[2]), int.Parse(data[1]), int.Parse(data[0]), int.Parse(data[3]), int.Parse(data[4]), int.Parse(data[5]));
+                        string action = "";
+                        while (newDateTime <= dateBackUp && read != null)
                         {
-                            data = read.Split(new[] { ' ', ':', '.' }, StringSplitOptions.RemoveEmptyEntries);
-                            newDateTime = new DateTime(int.Parse(data[2]), int.Parse(data[1]), int.Parse(data[0]), int.Parse(data[3]), int.Parse(data[4]), int.Parse(data[5]));
 
+
+                            action = data[6];
+                            if (action == "Created")
+                                Created(data);
+                            else if (action == "Deleted")
+                                Deleted(data);
+                            else if (action == "Renamed")
+                                Renamed(read);
+                            else if (action == "Changed")
+                                Changed(read);
+                            read = read.Remove(0, 19);
+                            log_copy.WriteLine($"{DateTime.Now}{read}");
+                            read = log.ReadLine();
+
+                            if (read != null)
+                            {
+                                data = read.Split(new[] { ' ', ':', '.' }, StringSplitOptions.RemoveEmptyEntries);
+                                if (data[0] == "DeleteAll")
+                                    foreach (string folder in Directory.GetFiles("C:/Monitoring"))
+                                    {
+                                        File.Delete(folder);
+                                    }
+                                else
+                                    newDateTime = new DateTime(int.Parse(data[2]), int.Parse(data[1]), int.Parse(data[0]), int.Parse(data[3]), int.Parse(data[4]), int.Parse(data[5]));
+
+
+                            }
                         }
+                        changes = true;
                     }
+                    else
+                        Console.WriteLine("There were no changes");
 
                 }
 
             }
+            if (changes)
             using (StreamWriter log = new StreamWriter(path, true))
             {
                 using (StreamReader log_copy = new StreamReader(pathLogCopy))
                 {
                     string read = log_copy.ReadToEnd();
+                    log.WriteLine("DeleteAll");
                     log.WriteLine(read);
                 }
             }
+            Console.WriteLine("Press enter to exit.");
+            Console.ReadLine();
         }
 
 
