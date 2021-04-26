@@ -80,6 +80,8 @@ namespace Task_4
                 Directory.CreateDirectory(pathCopy);
             }
 
+            Console.WriteLine("Path of the catalog: C:/ Monitoring");
+
             using (FileStream fileStream = File.Open("LOG.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite)) ;
             using (FileStream fileStream = File.Open("LOG_Copy.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite)) ;
 
@@ -276,7 +278,10 @@ namespace Task_4
             string name = "";
             for (int i = 5; i < data.Length; ++i)
             {
-                name += data[i];
+                 if (i != 5)
+                    name += " " + data[i];
+                else
+                    name += data[i];
             }
             data = read.Split(new[] { ' ', ':', '.' }, StringSplitOptions.RemoveEmptyEntries);
             string Old = "C:/Monitoring/" + name;
