@@ -1,0 +1,27 @@
+body{
+    background-color: #333333;
+}
+div{  
+    box-sizing: border-box;
+    position: relative;
+    top: 40px;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    background-color:rgb(67, 164, 202);
+    border: 5px solid skyblue;
+    font-size: xx-large;
+    font-family: 'Times New Roman', Times, serif;
+}
+div::after{
+    content: '';
+    position: absolute;
+    background-color:rgb(67, 164, 202);
+    left: calc(50% - 20px);
+    top: -26px;
+    width: 40px;
+    height: 40px;
+    border-top: 5px solid skyblue;
+    border-right: 5px solid skyblue;
+    transform: rotate(-45deg);
+}

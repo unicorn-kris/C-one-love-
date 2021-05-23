@@ -1,0 +1,15 @@
+ul{
+    padding-left: 10px;
+    width: 200px; 
+    border: 1px solid black;
+    background-color:rgb(245, 181, 97);
+    border-radius: 5px;
+    box-shadow: 4px 4px 0 rgb(136, 24, 24);
+}
+li{
+    list-style-type: none;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-family: 'Times New Roman';
+    color: red;
+}
