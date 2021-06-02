@@ -74,6 +74,7 @@ namespace Task_4
             {
                 Directory.CreateDirectory(pathMain);
             }
+
             string pathCopy = @"C:/Monitoring_Copy";
             if (!Directory.Exists(pathCopy))
             {
@@ -98,6 +99,7 @@ namespace Task_4
             }
 
         }
+
         static string path = Path.Combine(Directory.GetCurrentDirectory(), "LOG.txt");
         static string pathCopy = "C:/Monitoring_Copy";
 
@@ -124,18 +126,12 @@ namespace Task_4
             var lastAccess = File.GetLastAccessTime(e.FullPath);
             var lastWrite = File.GetLastWriteTime(e.FullPath);
             var createTime = File.GetCreationTime(e.FullPath);
+
             if (lastWrite != createTime && lastAccess != createTime && lastAccess != lastWrite)
             {
                 {
                     using (StreamWriter log = new StreamWriter(path, true))
                     {
-                        //log.Write($"{now} Changed: {e.Name} Content: ");
-                        //string path = e.FullPath;
-                        //using (StreamReader read = new StreamReader(path))
-                        //{
-                        //    log.Write(read.ReadToEnd());
-                        //}
-                        //log.WriteLine();
                         DateTime now = DateTime.Now;
                         string Copy = pathCopy + "/" + "__" + now.Day + "_" + now.Month + "_" + now.Year + "_" + now.Hour + "_" + now.Minute + "_" + now.Second + "-" + e.Name;
 
@@ -156,6 +152,13 @@ namespace Task_4
             }
             
         }
+
+        public static string CopyOfFile(DateTime now, FileSystemEventArgs e)
+        {
+            string copy = pathCopy + "/" + "__" + now.Day + "_" + now.Month + "_" + now.Year + "_" + now.Hour + "_" + now.Minute + "_" + now.Second + "-" + e.Name;
+            return copy;
+        }
+
         private static void OnCreated(object sender, FileSystemEventArgs e)
         {
             using (StreamWriter log = new StreamWriter(path, true))
@@ -163,11 +166,12 @@ namespace Task_4
                 DateTime now = DateTime.Now;
                 log.WriteLine($"{now} Created: {e.Name}");
 
-                string Copy = pathCopy + "/" + "__" + now.Day + "_" + now.Month + "_" + now.Year + "_" + now.Hour + "_" + now.Minute + "_" + now.Second + "-" + e.Name;
-                FileStream fs = File.Create(Copy);
+                string copy = CopyOfFile(now, e);
+                FileStream fs = File.Create(copy);
                 fs.Close();
             }
         }
+
         private static void OnRenamed(object sender, RenamedEventArgs e)
         {
             using (StreamWriter log = new StreamWriter(path, true))
@@ -175,10 +179,11 @@ namespace Task_4
                 DateTime now = DateTime.Now;
                 log.WriteLine($"{now} Renamed: {e.OldName} NewName: {e.Name}");
 
-                string Copy = pathCopy + "/" + "__" + now.Day + "_" + now.Month + "_" + now.Year + "_" + now.Hour + "_" + now.Minute + "_" + now.Second + "-" + e.Name;
-                File.Create(Copy);
+                string copy = CopyOfFile(now, e);
+                File.Create(copy);
             }
         }
+
         private static void OnDeleted(object sender, FileSystemEventArgs e)
 
         {
@@ -189,7 +194,9 @@ namespace Task_4
             }
         }
 
+
         static string pathLogCopy = Path.Combine(Directory.GetCurrentDirectory(), "LOG_Copy.txt");
+
         static void BackDirectory()
         {
             
@@ -215,6 +222,7 @@ namespace Task_4
                         string[] data = read.Split(new[] { ' ', ':', '.' }, StringSplitOptions.RemoveEmptyEntries);
                         DateTime newDateTime = new DateTime(int.Parse(data[2]), int.Parse(data[1]), int.Parse(data[0]), int.Parse(data[3]), int.Parse(data[4]), int.Parse(data[5]));
                         string action = "";
+
                         while (newDateTime <= dateBackUp )
                         {
                             if (data.Length > 1)
@@ -231,6 +239,7 @@ namespace Task_4
                                 read = read.Remove(0, 19);
                                 log_copy.WriteLine($"{DateTime.Now}{read}");
                             }
+
                             if (read != null && read != "")
                             {
                                 if (data[0] == "DeleteAll")
@@ -238,25 +247,24 @@ namespace Task_4
                                     {
                                         File.Delete(folder);
                                     }
-                                
                             }
+
                             read = log.ReadLine();
                             data = read.Split(new[] { ' ', ':', '.' }, StringSplitOptions.RemoveEmptyEntries);
+
                             if (data.Length > 1)
                             {
                                 newDateTime = new DateTime(int.Parse(data[2]), int.Parse(data[1]), int.Parse(data[0]), int.Parse(data[3]), int.Parse(data[4]), int.Parse(data[5]));
                             }
-
 
                         }
                         changes = true;
                     }
                     else
                         Console.WriteLine("There were no changes");
-
                 }
-
             }
+
             if (changes)
             using (StreamWriter log = new StreamWriter(path, true))
             {
@@ -267,15 +275,29 @@ namespace Task_4
                     log.WriteLine(read);
                 }
             }
+
             Console.WriteLine("Press enter to exit.");
             Console.ReadLine();
         }
 
+        public static string RenameOrCreateForCopyPath(string[] data, string name)
+        {
+            string file = "C:/Monitoring_Copy/" + $"__{int.Parse(data[0])}_{int.Parse(data[1])}_{int.Parse(data[2])}_{int.Parse(data[3])}_{int.Parse(data[4])}_{int.Parse(data[5])}-" + name;
+            return file;
+        }
+
+        public static string CopyString(string name)
+        {
+            DateTime now = DateTime.Now;
+            string copy = pathCopy + "/" + "__" + now.Day + "_" + now.Month + "_" + now.Year + "_" + now.Hour + "_" + now.Minute + "_" + now.Second + "-" + name;
+            return copy;
+        }
 
         private static void Changed(string read)
         {
             string[] data = read.Split(new[] { ' ', ':' }, StringSplitOptions.RemoveEmptyEntries);
             string name = "";
+
             for (int i = 5; i < data.Length; ++i)
             {
                  if (i != 5)
@@ -283,19 +305,21 @@ namespace Task_4
                 else
                     name += data[i];
             }
+
             data = read.Split(new[] { ' ', ':', '.' }, StringSplitOptions.RemoveEmptyEntries);
-            string Old = "C:/Monitoring/" + name;
-            string NewFile = "C:/Monitoring_Copy/" + $"__{int.Parse(data[0])}_{int.Parse(data[1])}_{int.Parse(data[2])}_{int.Parse(data[3])}_{int.Parse(data[4])}_{int.Parse(data[5])}-" + name;
-            File.Delete(Old);
-            File.Copy(NewFile, Old);
+            string old = "C:/Monitoring/" + name;
+            string newFile = RenameOrCreateForCopyPath(data, name);
+            
+            File.Delete(old);
+            File.Copy(newFile, old);
 
-
-            DateTime now = DateTime.Now;
-            string Copy = pathCopy + "/" + "__" + now.Day + "_" + now.Month + "_" + now.Year + "_" + now.Hour + "_" + now.Minute + "_" + now.Second + "-" + name;
+            string copy = CopyString(name);
         }
+
         private static void Created(string[] data)
         {
             string name = "";
+            
             for (int i = 7; i < data.Length; ++i)
             {
                 if (i == data.Length - 1)
@@ -304,15 +328,15 @@ namespace Task_4
                     name += " " + data[i];
                 else
                     name += data[i];
-            }
-            string Create = "C:/Monitoring_Copy/" + $"__{int.Parse(data[0])}_{int.Parse(data[1])}_{int.Parse(data[2])}_{int.Parse(data[3])}_{int.Parse(data[4])}_{int.Parse(data[5])}-" + name;
-            string New = "C:/Monitoring/" + name;
-            File.Copy(Create, New);
+           }
+            
+            string create = RenameOrCreateForCopyPath(data, name);
+            string newFile = "C:/Monitoring/" + name;
+            File.Copy(create, newFile);
 
-
-            DateTime now = DateTime.Now;
-            string Copy = pathCopy + "/" + "__" + now.Day + "_" + now.Month + "_" + now.Year + "_" + now.Hour + "_" + now.Minute + "_" + now.Second + "-" + name;
-            FileStream fs = File.Create(Copy);
+            string copy = CopyString(name);
+            
+            FileStream fs = File.Create(copy);
             fs.Close();
         }
 
@@ -322,6 +346,7 @@ namespace Task_4
             string name = "";
             string newName = "";
             int j = 5;
+            
             for (int i = 5; i < data.Length; ++i)
             {
                 if (data[i] != "NewName")
@@ -333,12 +358,14 @@ namespace Task_4
                     else
                         name += data[i];
                 }
+                
                 else
                 {
                     j = i;
                     break;
                 }
             }
+            
             for (int i = j + 1; i < data.Length; ++i)
             {
                 newName += data[i];
@@ -346,16 +373,18 @@ namespace Task_4
 
             data = read.Split(new[] { ' ', ':', '.' }, StringSplitOptions.RemoveEmptyEntries);
             string Old = "C:/Monitoring/" + name;
-            string NewFile = "C:/Monitoring_Copy/" + $"__{int.Parse(data[0])}_{int.Parse(data[1])}_{int.Parse(data[2])}_{int.Parse(data[3])}_{int.Parse(data[4])}_{int.Parse(data[5])}-" + newName;
-            string New = "C:/Monitoring/" + newName;
+            string newFile = RenameOrCreateForCopyPath(data, name);
+            string newFileName = "C:/Monitoring/" + newName;
+            
             File.Delete(Old);
-            File.Copy(NewFile, New);
+            File.Copy(newFile, newFileName);
 
-            DateTime now = DateTime.Now;
-            string Copy = pathCopy + "/" + "__" + now.Day + "_" + now.Month + "_" + now.Year + "_" + now.Hour + "_" + now.Minute + "_" + now.Second + "-" + newName;
-            if (!File.Exists(Copy))
-            File.Create(Copy);
+            string copy = CopyString(name);
+
+            if (!File.Exists(copy))
+            File.Create(copy);
         }
+
         private static void Deleted(string[] data)
 
         {
@@ -369,9 +398,11 @@ namespace Task_4
                 else
                     name += data[i];
             }
-            string Delete = "C:/Monitoring/" + name;
-            if (File.Exists(Delete))
-                File.Delete(Delete);
+            
+            string delete = "C:/Monitoring/" + name;
+            
+            if (File.Exists(delete))
+                File.Delete(delete);
         }
     }
 }
