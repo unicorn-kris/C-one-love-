@@ -1,0 +1,80 @@
+﻿@using UsersAndAwards.Dependencies
+@{
+    Layout = null;
+
+    string pageName = "Users And Awards";
+
+    var users = DependencyResolver.UserLogic;
+    var dbUser = users.GetAll();
+    WebGrid gridUser = null;
+    if (dbUser != null)
+    {
+        gridUser = new WebGrid(dbUser);
+    }
+
+    var awards = DependencyResolver.AwardLogic;
+    var dbAward = awards.GetAll();
+    WebGrid gridAward = null;
+    if (dbAward != null)
+    {
+        gridAward = new WebGrid(dbAward);
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@pageName</title>
+    <link rel="stylesheet" href="Style.css">
+</head>
+
+<body>
+    <div class="menu">
+        <ul>
+            <li>
+                <button class="button_style" id="Reward" type="button"><p>Reward a Person</p></button>
+            </li>
+            <li>
+                <button class="button_style" id="AddUser" type="button"><p>Add User</p></button>
+            </li>
+            <li>
+                <button class="button_style" id="ShowUser" type="button"><p>Show Users</p></button>
+            </li>
+            <li>
+                <button class="button_style" id="DeleteUser" type="button"><p>Delete User</p></button>
+            </li>
+            <li>
+                <button class="button_style" id="UpdateUser" type="button"><p>Update User</p></button>
+            </li>
+            <li>
+                <button class="button_style" id="AddAward" type="button"><p>Add Award</p></button>
+            </li>
+            <li>
+                <button class="button_style" id="ShowAward" type="button"><p>Show Awards</p></button>
+            </li>
+            <li>
+                <button class="button_style" id="DeleteAward" type="button"><p>Delete Award</p></button>
+            </li>
+            <li>
+                <button class="button_style" id="UpdateAward" type="button"><p>Update Award</p></button>
+            </li>
+        </ul>
+        @{
+            if (gridUser != null)
+            {
+                @gridUser.GetHtml();
+            }
+        }
+        <form method="post">
+            <input type="text" name="name" value="" />
+            <br />
+            <input type="submit" name="submit" value="Submit" />
+        </form>
+
+    </div>
+</body>
+</html>
+
+
+
